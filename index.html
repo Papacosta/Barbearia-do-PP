@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Barbearia do PP — barbearia de bairro</title>
+<link rel="icon" href="data:,">
+<meta name="description" content="Barbearia de bairro no Jardim América, Goiânia, desde 2005. Corte de cabelo, barba, combo e pintura. Reserve sua cadeira em segundos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="pular" href="#agendar">Ir direto para o agendamento</a>
+
+<header class="topo">
+  <a class="topo__marca" href="#topo">Barbearia do PP</a>
+  <nav class="topo__nav">
+    <a href="#precos">Preços</a>
+    <a href="#agendar">Agendar</a>
+    <a href="#conta">Minha conta</a>
+  </nav>
+  <a class="topo__tel" href="tel:+556240028922">(62) 4002-8922</a>
+</header>
+
+<main id="topo">
+
+  <!-- ── Vitrine: a agenda do dia é a própria capa ─────────────────────── -->
+  <section class="vitrine">
+    <div class="vitrine__texto">
+      <h1 class="vitrine__marca">
+        <span>Barbearia</span>
+        <span>do PP</span>
+      </h1>
+      <div class="faixa"></div>
+      <p class="vitrine__sub">Barbearia de bairro no Jardim América, Goiânia, desde 2005. Cadeira de couro, toalha quente e o mesmo barbeiro desde o primeiro corte.</p>
+    </div>
+
+    <div class="hoje">
+      <div class="hoje__topo">
+        <span class="hoje__dia" id="hojeDia">hoje</span>
+        <span class="hoje__janela" id="hojeJanela"></span>
+      </div>
+      <div class="hoje__slots" id="hojeSlots"></div>
+      <p class="hoje__nota" id="hojeNota">Toque num horário livre para começar por ele.</p>
+    </div>
+  </section>
+
+  <!-- ── Lousa de preços ───────────────────────────────────────────────── -->
+  <section class="placa" id="precos">
+    <div class="secao__cabeca">
+      <h2 class="secao__titulo">Preço na placa</h2>
+      <p class="secao__nota">Clique numa linha para marcar.</p>
+    </div>
+
+    <ul class="lousa" id="lousa" role="radiogroup" aria-label="Serviços e preços"></ul>
+
+  </section>
+
+  <!-- ── Conta: vem antes do agendamento para nao pedir os dados duas vezes ─ -->
+  <section class="conta" id="conta">
+    <div class="secao__cabeca">
+      <h2 class="secao__titulo">Sua conta</h2>
+      <p class="secao__nota">Entre ou crie sua conta: os seus dados ficam guardados e não pedimos de novo ao marcar.</p>
+    </div>
+
+    <div class="avisos" id="avisoContaCriada" role="status" aria-live="polite"></div>
+
+    <div class="conta__grade" id="areaVisitante">
+      <form class="painel-form" id="formEntrar" novalidate>
+        <h3 class="painel-form__titulo">Já tem conta</h3>
+        <div class="campo">
+          <label class="campo__rot" for="eEmail">E-mail</label>
+          <input class="campo__entrada" id="eEmail" type="email" autocomplete="email" placeholder="voce@email.com">
+        </div>
+        <div class="campo">
+          <label class="campo__rot" for="eSenha">Senha</label>
+          <input class="campo__entrada" id="eSenha" type="password" autocomplete="current-password" placeholder="Sua senha">
+          <p class="campo__erro" id="erroEntrar"></p>
+        </div>
+        <button class="botao botao--principal" type="submit">Entrar</button>
+      </form>
+
+      <form class="painel-form" id="formCriar" novalidate>
+        <h3 class="painel-form__titulo">Criar conta</h3>
+        <div class="campo">
+          <label class="campo__rot" for="cNome">Nome</label>
+          <input class="campo__entrada" id="cNome" type="text" autocomplete="name" placeholder="Nome e sobrenome">
+          <p class="campo__erro" id="erroCNome"></p>
+        </div>
+        <div class="campo">
+          <label class="campo__rot" for="cTel">Telefone</label>
+          <input class="campo__entrada" id="cTel" type="tel" inputmode="numeric" autocomplete="tel" placeholder="(62) 91234-5678">
+          <p class="campo__erro" id="erroCTel"></p>
+        </div>
+        <div class="campo">
+          <label class="campo__rot" for="cEmail">E-mail</label>
+          <input class="campo__entrada" id="cEmail" type="email" autocomplete="email" placeholder="voce@email.com">
+          <p class="campo__erro" id="erroCEmail"></p>
+        </div>
+        <div class="campo">
+          <label class="campo__rot" for="cSenha">Senha</label>
+          <input class="campo__entrada" id="cSenha" type="password" autocomplete="new-password" placeholder="Mínimo de 4 caracteres">
+          <p class="campo__erro" id="erroCSenha"></p>
+        </div>
+        <button class="botao botao--linha" type="submit">Criar conta</button>
+      </form>
+    </div>
+
+    <div class="logado" id="areaLogado" hidden>
+      <div class="logado__cabeca">
+        <p class="logado__ola">Bom te ver de novo, <strong id="logadoNome">—</strong></p>
+        <button class="linkbotao" type="button" id="btnSair">Sair</button>
+      </div>
+      <div class="historico" id="historico"></div>
+    </div>
+
+    <p class="conta__privado">Site de demonstração: nome, telefone, e-mail e histórico ficam salvos apenas neste navegador.</p>
+  </section>
+
+  <!-- ── Agendamento ───────────────────────────────────────────────────── -->
+  <section class="agenda" id="agendar">
+    <div class="secao__cabeca">
+      <h2 class="secao__titulo">Reservar a cadeira</h2>
+      <p class="secao__nota">Escolha o serviço, o dia e a hora. Com conta na página, seus dados já vêm preenchidos.</p>
+    </div>
+
+    <div class="agenda__grade">
+
+      <!-- trilha + etapas -->
+      <div class="trilha" aria-hidden="true">
+        <ol class="trilha__lista">
+          <li class="trilha__item" id="trilha1">
+            <span class="trilha__num">1</span>
+            <span class="trilha__rot">Serviço</span>
+            <span class="trilha__val" id="trilhaServico">—</span>
+          </li>
+          <li class="trilha__item" id="trilha2">
+            <span class="trilha__num">2</span>
+            <span class="trilha__rot">Dia e hora</span>
+            <span class="trilha__val" id="trilhaHorario">—</span>
+          </li>
+          <li class="trilha__item" id="trilha3">
+            <span class="trilha__num">3</span>
+            <span class="trilha__rot">Quem vai</span>
+            <span class="trilha__val" id="trilhaDados">—</span>
+          </li>
+        </ol>
+      </div>
+
+      <div class="agenda__painel">
+
+        <!-- passo 1: serviço (também escolhido na lousa) -->
+        <div class="passo">
+          <h3 class="passo__titulo">Serviço</h3>
+          <div class="escolhas" id="escolhasServico" role="radiogroup" aria-label="Serviço"></div>
+        </div>
+
+        <!-- passo 2: dia e hora -->
+        <div class="passo">
+          <h3 class="passo__titulo">Dia e hora</h3>
+          <div class="dias" id="dias" role="radiogroup" aria-label="Dia da semana"></div>
+          <p class="passo__ajuda" id="ajudaDia">Horários livres de segunda a domingo.</p>
+          <div class="slots" id="slots" role="radiogroup" aria-label="Horário"></div>
+        </div>
+
+        <!-- passo 3: quem vai na cadeira -->
+        <div class="passo">
+          <h3 class="passo__titulo">Quem vai na cadeira</h3>
+
+          <div class="avisos" id="avisos" role="status" aria-live="polite"></div>
+
+          <div class="quem" id="quem" hidden>
+            <span class="quem__texto" id="quemTexto"></span>
+            <button class="linkbotao" type="button" id="btnTrocarPessoa">Trocar pessoa</button>
+          </div>
+
+          <form class="form" id="formDados" novalidate>
+            <div class="campos" id="campos">
+              <div class="campo">
+                <label class="campo__rot" for="fNome">Nome</label>
+                <input class="campo__entrada" id="fNome" name="nome" type="text" autocomplete="name" placeholder="Nome e sobrenome">
+                <p class="campo__erro" id="erroNome"></p>
+              </div>
+
+              <div class="campo">
+                <label class="campo__rot" for="fTel">Telefone</label>
+                <input class="campo__entrada" id="fTel" name="telefone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="(62) 91234-5678">
+                <p class="campo__erro" id="erroTel"></p>
+              </div>
+
+              <div class="campo">
+                <label class="campo__rot" for="fEmail">E-mail</label>
+                <input class="campo__entrada" id="fEmail" name="email" type="email" autocomplete="email" placeholder="voce@email.com">
+                <p class="campo__erro" id="erroEmail"></p>
+              </div>
+            </div>
+
+            <div class="form__erro" id="erroGeral" role="alert"></div>
+
+            <button class="botao botao--principal" type="submit" id="btnConfirmar">Confirmar horário</button>
+          </form>
+        </div>
+
+        <!-- confirmação -->
+        <div class="confirmacao" id="confirmacao" hidden>
+          <svg class="confirmacao__selo" viewBox="0 0 48 48" aria-hidden="true">
+            <circle cx="24" cy="24" r="22" fill="none" stroke="currentColor" stroke-width="2"/>
+            <path id="seloMarca" d="M14 25l7 7 14-16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"/>
+          </svg>
+          <h3 class="confirmacao__titulo" id="confirmacaoTitulo">Cadeira guardada</h3>
+          <p class="confirmacao__texto" id="confirmacaoTexto"></p>
+          <dl class="confirmacao__lista" id="confirmacaoLista"></dl>
+
+          <div class="confirmacao__acoes">
+            <button class="botao botao--principal" type="button" id="btnVerHistorico">Ver meus cortes</button>
+            <button class="botao botao--linha" type="button" id="btnOutro">Marcar outro horário</button>
+          </div>
+
+          <div class="confirmacao__acoes confirmacao__acoes--secundarias" id="grupoAjustes">
+            <button class="botao botao--linha" type="button" id="btnRemarcar">Remarcar horário</button>
+            <button class="botao botao--linha botao--perigo" type="button" id="btnCancelar">Cancelar horário</button>
+          </div>
+
+          <div class="cancela" id="cancela" hidden>
+            <p class="cancela__txt" id="cancelaTexto"></p>
+            <div class="cancela__acoes">
+              <button class="botao botao--principal" type="button" id="btnCancelaSim">Sim, cancelar o horário</button>
+              <button class="botao botao--linha" type="button" id="btnCancelaNao">Deixar como está</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- resumo -->
+      <aside class="resumo" id="resumo">
+        <p class="resumo__rot">Sua reserva</p>
+        <dl class="resumo__lista">
+          <div class="resumo__par"><dt>Serviço</dt><dd id="rServico">Escolha acima</dd></div>
+          <div class="resumo__par"><dt>Dia</dt><dd id="rDia">—</dd></div>
+          <div class="resumo__par"><dt>Horário</dt><dd id="rHora">—</dd></div>
+          <div class="resumo__par"><dt>Duração</dt><dd id="rDuracao">—</dd></div>
+        </dl>
+        <div class="resumo__total">
+          <span class="resumo__totalRot">Total</span>
+          <span class="resumo__totalVal" id="rTotal">R$ 0</span>
+        </div>
+        <p class="resumo__nota" id="resumoNota">Combinado em dinheiro ou Pix na hora.</p>
+      </aside>
+    </div>
+  </section>
+
+</main>
+
+<footer class="rodape">
+  <div class="rodape__col">
+    <p class="rodape__marca">Barbearia do PP</p>
+    <p>Av. T-9, 1418 — Jardim América<br>Goiânia, GO</p>
+  </div>
+  <div class="rodape__col">
+    <p class="rodape__tit">Horários</p>
+    <table class="rodape__tabela" id="tabelaHoras"></table>
+  </div>
+  <div class="rodape__col">
+    <p class="rodape__tit">Contato</p>
+    <p><a href="tel:+556240028922">(62) 4002-8922</a><br><a href="mailto:contato@barbeariadopp.com.br">contato@barbeariadopp.com.br</a></p>
+    <p class="rodape__tit">Pagamento</p>
+    <p>Dinheiro, Pix ou cartão na cadeira.</p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
